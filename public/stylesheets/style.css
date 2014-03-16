@@ -1,0 +1,82 @@
+body{
+  font-family: 'Georgia';
+  color: #444;
+  padding-left: 13px;
+}
+
+
+header {
+    clear: both;
+    height: 50px;
+    padding: 1px;
+}
+
+h1 {
+  font-family:maven_pro_bold;
+  text-transform: uppercase;
+}
+
+footer {
+    clear: both;
+    padding: 1px;
+}
+
+.container{
+  width: 1200px;
+  margin: 50px auto;
+  clear: both;
+}
+
+/*------------------------------------*/
+
+a:link {
+  color: #1B49A0;
+  text-decoration: none;
+}
+a:visited {
+  color: #1B49A0;
+  text-decoration: none;
+}
+a:hover {
+  color: #1B49A0;
+  text-decoration: underline;
+}
+a:active {
+  color: #1B49A0;
+  text-decoration: none;
+}
+
+.navigation div{
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+}
+
+
+/*------------------------------------*/
+
+
+.main-content{
+  padding: 10px;
+  width: 900px;
+}
+
+
+li{
+  list-style-type: none;
+}
+
+.not-found{
+  color: red;
+}
+
+.error{
+  color: red;
+}
+
+p{
+  font-size: small;
+  margin-bottom: 20px;
+}
+
+

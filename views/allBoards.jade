@@ -1,0 +1,10 @@
+extend layout
+block content
+  | This is the default page. Pick a board to continue...
+
+  - each board in boards
+    p
+      unless(board.closed)
+        a(href="/#{board.id}") #{board.name}
+      else
+        .closed #{board.name} is CLOSED
