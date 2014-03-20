@@ -5,6 +5,6 @@ block content
   - each board in boards
     p
       unless(board.closed)
-        a(href="/#{board.id}") #{board.name}
+        a(href="/board/#{board.id}") #{board.name}
       else
         .closed #{board.name} is CLOSED

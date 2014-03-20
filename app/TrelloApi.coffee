@@ -34,8 +34,12 @@ module.exports = class TrelloApi
     apiEndpoint = "/1/boards/#{board_id}/lists?" + endURL
     @curlRequest baseUrl + apiEndpoint, done
 
-  getAllCards: (idList, done) ->
-    apiEndpoint = "/1/lists/#{idList}/cards?" + endURL
+  getAllCards: (list_id, done) ->
+    apiEndpoint = "/1/lists/#{list_id}/cards?" + endURL
+    @curlRequest baseUrl + apiEndpoint, done
+
+  getChecklistsForCard: (card_id, done) ->
+    apiEndpoint = "/1/cards/#{card_id}/checklists?" + endURL
     @curlRequest baseUrl + apiEndpoint, done
 
   getAllListsWithCards: (board_id, done) ->
@@ -43,9 +47,13 @@ module.exports = class TrelloApi
       if error then return done error
       async.forEach lists, ((list, callback) =>
         @getAllCards list.id, (error, cards) =>
-          list.cards = cards
-          #console.log ' -- added cards for ', list.id
-          callback()
+          async.forEach cards, ((card, cb) =>
+            @getChecklistsForCard card.id, (error, checklist) =>
+              card.checklist = checklist
+              cb()
+          ), () =>
+            list.cards = cards
+            callback()
       ), (error) ->
         done error, lists
 

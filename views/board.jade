@@ -11,6 +11,7 @@ block content
             .card-name NAME: #{card.name}
             .card-desc DESC: #{card.desc}
             .card-assign ASSIGNED: #{card.idMembers}
+            .card-checklist CHECKLIST: #{JSON.stringify(card.checklist)}
 
       else
         p.no-cards NO CARDS
