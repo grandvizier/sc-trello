@@ -1,0 +1,65 @@
+/*----------   GENERAL  ----------*/
+.card-id{
+  display: none;
+}
+
+.card-name, .card-unassigned{
+  font-weight: bold;
+}
+
+.card-desc{
+  font-size: small;
+}
+
+
+.card-assigned{
+  background-color: #fff;
+}
+
+.member-name{
+  margin-left: 60px;
+}
+
+.member-name img{
+  padding-left: 30px;
+  padding-top: 6px;
+  margin-left: -150px;
+}
+
+.member-name.no-image{
+  font-weight: bold;
+  font-style: italic;
+}
+
+/*----------   FULL  ----------*/
+
+.full-card{
+  padding: 6px 8px 4px;
+  border: 1px solid #bdbdbd;
+  border-radius: 3px;
+  margin: 5px;
+  max-width: 300px;
+  min-height: 20px;
+  position: relative;
+  float: left;
+}
+
+.card-info{
+  background-color: rgb(177, 212, 243);
+}
+
+/*----------   CHECKLIST  ----------*/
+
+.checklist p{
+  margin-left: 25px;
+  border-top: 1px solid #bdbdbd;
+}
+
+.checklist p{
+  font-size: smaller;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+.checklist .complete{
+  text-decoration: line-through;
+}

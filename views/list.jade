@@ -1,0 +1,11 @@
+extend layout
+
+block header-title
+  h1 List: #{list.name}
+
+block content
+
+  - each card in cards
+
+    include cards/full
+

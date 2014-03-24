@@ -3,15 +3,18 @@ html
   head
     title SC-Trello
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/card.css')
   body
     header
       .navigation
-        .release
-          a(href="release") RELEASE
-        .sprint
-          a(href="sprint") sprint
-      -var titleText = (board) ? ': ' + board : ''
-      h1 Trello board #{titleText}
+        .home
+          a(href="/") home
+        .all-boards
+          a(href="/board") All Boards
+
+      block header-title
+        -var titleText = (board) ? ': ' + board : ''
+        h1 Trello board #{titleText}
 
     .container
       .main-content

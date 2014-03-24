@@ -6,12 +6,7 @@ block content
       a(href="/list/#{list.id}") #{list.name}
       if(list.cards.length)
         - each card in list.cards
-          p
-            .card-id ID: #{card.id}
-            .card-name NAME: #{card.name}
-            .card-desc DESC: #{card.desc}
-            .card-assign ASSIGNED: #{card.idMembers}
-            .card-checklist CHECKLIST: #{JSON.stringify(card.checklist)}
+          include cards/small
 
       else
         p.no-cards NO CARDS

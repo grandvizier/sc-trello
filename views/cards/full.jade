@@ -1,0 +1,22 @@
+block card
+  .full-card
+    .card-info
+      .card-id ID: #{card.id}
+      .card-name #{card.name}
+      .card-desc #{card.desc}
+    if(card.idMembers.length)
+      .card-assigned
+        - each memberId in card.idMembers
+          if(members[memberId].avatar)
+            .member-name #{members[memberId].fullName}
+              img.member-avatar(
+                src="#{members[memberId].avatar}"
+                height="30"
+                width="30"
+                alt="#{members[memberId].username}")
+          else
+            .member-name.no-image #{members[memberId].fullName}
+    else
+      .card-unassigned Unassigned
+    - each checklist in card.checklist
+      include checklist
