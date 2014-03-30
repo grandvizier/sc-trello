@@ -1,5 +1,11 @@
 extend layout
 
+block append header-nav
+    .print-card
+      a(href="/print/card/#{list.id}") Print Cards
+    .print-checklist
+      a(href="/print/checklist/#{list.id}") Print Checklists
+
 block header-title
   h1 List: #{list.name}
 

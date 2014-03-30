@@ -1,0 +1,12 @@
+extend print
+block content
+  -var index = 1
+  - each card in cards
+    if index == 1
+      tr(data-in="#{index}")
+    if index == 4
+      -index = 0
+    -index++
+      td(data-in="#{index}")
+        include ../cards/printCard
+

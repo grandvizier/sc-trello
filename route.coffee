@@ -31,6 +31,9 @@ app.get "/board/:board?", (req, res) ->
 app.get "/list/:id?", (req, res) ->
   loadList req, res
 
+app.get "/print/:type/:id", (req, res) ->
+  showPrintView req, res
+
 
 #TODO - make part of config
 app.listen 3000
@@ -79,6 +82,28 @@ loadList = (req, res) ->
     if error then res.render "error.jade", error: error
     else
       res.render "list.jade",
+        list: results.getListInfo
+        cards: results.getAllCards
+        members: results.getAllMembers
+
+showPrintView = (req, res) ->
+  viewType = req.params.type
+  list_id = req.params.id
+  trello = new TrelloApi
+  unless list_id
+    return res.render "error.jade", error: "No list id was provided"
+  async.series
+    getListInfo: (next) =>
+      trello.getListInfo list_id, next
+    getAllCards: (next) =>
+      trello.getAllCardsWithChecklist list_id, next
+    getAllMembers: (next) =>
+      trello.getAllMembersForList list_id, next
+  , (error, results) =>
+    if error then res.render "error.jade", error: error
+    else
+      res.render "print/fullCard.jade",
+        viewType: viewType
         list: results.getListInfo
         cards: results.getAllCards
         members: results.getAllMembers

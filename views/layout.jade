@@ -7,10 +7,11 @@ html
   body
     header
       .navigation
-        .home
-          a(href="/") home
-        .all-boards
-          a(href="/board") All Boards
+        block header-nav
+          .home
+            a(href="/") home
+          .all-boards
+            a(href="/board") All Boards
 
       block header-title
         -var titleText = (board) ? ': ' + board : ''
