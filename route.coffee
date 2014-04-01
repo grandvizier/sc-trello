@@ -54,7 +54,6 @@ loadBoard = (req, res) ->
       unless board then return next()
       trello.getAllMembersOnBoard board, next
   , (error, results) =>
-    console.log " error ? ", results if error
     if error then return res.render "error.jade", error: error
     unless board then res.render "allBoards.jade",
       boards: results.getAllBoards
@@ -88,22 +87,29 @@ loadList = (req, res) ->
 
 showPrintView = (req, res) ->
   viewType = req.params.type
-  list_id = req.params.id
+  viewBoard = if viewType is 'card' then "print/fullCard.jade" else "print/fullChecklist.jade"
+  listId = req.params.id
+  cardId = req.query.card
   trello = new TrelloApi
-  unless list_id
+  unless listId
     return res.render "error.jade", error: "No list id was provided"
+  if viewType is 'checklist' and not cardId
+    return res.render "error.jade", error: "No card id provided for checklist"
   async.series
     getListInfo: (next) =>
-      trello.getListInfo list_id, next
-    getAllCards: (next) =>
-      trello.getAllCardsWithChecklist list_id, next
+      trello.getListInfo listId, next
+    getAllItems: (next) =>
+      if viewType is 'card'
+        trello.getAllCardsWithChecklist listId, next
+      else
+        trello.getChecklistsForCard cardId, next
     getAllMembers: (next) =>
-      trello.getAllMembersForList list_id, next
+      trello.getAllMembersForList listId, next
   , (error, results) =>
     if error then res.render "error.jade", error: error
     else
-      res.render "print/fullCard.jade",
+      res.render viewBoard,
         viewType: viewType
         list: results.getListInfo
-        cards: results.getAllCards
+        cards: results.getAllItems
         members: results.getAllMembers

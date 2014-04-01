@@ -1,0 +1,13 @@
+extend print
+block content
+  -var index = 1
+  - each list in cards
+    - each item in list.checkItems
+      if index == 1
+        tr(data-in="#{index}")
+      if index == 4
+        -index = 0
+      -index++
+        td(data-in="#{index}")
+          .checklist
+            #{item.name)
