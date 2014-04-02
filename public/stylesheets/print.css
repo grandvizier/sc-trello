@@ -36,6 +36,12 @@ td{
   text-align: center;
   text-overflow: ellipsis
 }
+td.buffer{
+  max-height: 1cm;
+  height: 1cm;
+  border: 0;
+  outline: 0;
+}
 
 @media print {
   .container {

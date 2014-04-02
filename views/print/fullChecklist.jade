@@ -1,6 +1,7 @@
 extend print
 block content
   -var index = 1
+  -var tableCount = 0
   - each list in cards
     - each item in list.checkItems
       if(item.state != "complete")
@@ -9,6 +10,11 @@ block content
         if index == 4
           -index = 0
         -index++
-          td(data-in="#{index}")
-            .checklist
-              #{item.name)
+        -tableCount++
+        if tableCount > 12
+          -tableCount = 1
+          tr
+            td.buffer(colspan=4)
+        td(data-in="#{index}")
+          .checklist
+            #{item.name)
