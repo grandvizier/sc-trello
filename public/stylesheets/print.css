@@ -30,7 +30,8 @@ td{
   max-width: 6.9cm;
   max-height: 6.8cm;
   height: 6.8cm;
-  border: 1px black solid;
+  border: 8px solid black;
+  outline: 8px solid red;
   padding: 10px;
   text-align: center;
   text-overflow: ellipsis
