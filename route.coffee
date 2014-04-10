@@ -3,6 +3,7 @@ async = require 'async'
 cons = require 'consolidate'
 _ = require 'lodash'
 TrelloApi = require './app/TrelloApi'
+JiraApi = require './app/JiraApi'
 
 
 app = express()
@@ -15,6 +16,10 @@ app.configure ->
   app.set "view engine", "hbs"
   app.use express.static(__dirname + "/public")
 
+
+app.get "/jira-auth", (req, res) ->
+  jira = new JiraApi
+  jira.connect req, res
 
 app.get "/", (req, res) ->
   res.render "index"
