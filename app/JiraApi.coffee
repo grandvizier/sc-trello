@@ -1,35 +1,34 @@
-fs = require("fs")
-OAuth = require("oauth").OAuth
+request = require 'request'
 
 module.exports = class JiraApi
 
-  privateKeyData = fs.readFileSync("/home/qa/rsa.pem", "utf8")
+  # check oauth documentation here
+  # https://developer.atlassian.com/display/JIRADEV/JIRA+REST+API+Example+-+OAuth+authentication
+  basicAuth = ""
+  baseUrl = "https://symphony.atlassian.net/"
 
-  consumer = new OAuth(
-    "https://symphony.atlassian.net/plugins/servlet/oauth/request-token", 
-    "https://symphony.atlassian.net/plugins/servlet/oauth/access-token", 
-    "oauth-sample-consumer", 
-    "", 
-    "1.0", 
-    "http://localhost:8080/sessions/callback", 
-    "RSA-SHA1", 
-    null, 
-    privateKeyData
-    )
-
-
-
-  connect: (request, response) ->
-    consumer.getOAuthRequestToken (error, oauthToken, oauthTokenSecret, results) ->
-      console.log '------ error ', error
-      console.log '------ token', oauthToken
-      if error
-        console.log error.data
-        response.send "Error getting OAuth access token"
+  curlRequest: (url, done) ->
+    #TODO: cache these calls somewhere? redis?
+    unless url then return done new Error 'no url provided'
+    options =
+      url: url
+      headers:
+        "Authorization": "Basic #{basicAuth}"
+    request options, (error, response, body) ->
+      if error then return done error
+      if response?.statusCode is 200
+        try
+          result = JSON.parse(body)
+          done null, result
+        catch ex
+          done ex
       else
-        request.session.oauthRequestToken = oauthToken
-        request.session.oauthRequestTokenSecret = oauthTokenSecret
-        console.log '------'
-        console.log request.session
-        response.redirect "https://jdog.atlassian.com/plugins/servlet/oauth/authorize?oauth_token=" + request.session.oauthRequestToken
-      return
+        console.log response.statusCode + '  returned: ', body
+        done response
+
+
+  getAllProjects: (done) ->
+    @curlRequest baseUrl + "rest/greenhopper/1.0/rapidview", done
+
+  getAgileBoardData: (rapidViewId, done) ->
+    @curlRequest baseUrl + "rest/greenhopper/1.0/xboard/work/allData/?rapidViewId=#{rapidViewId}", done
