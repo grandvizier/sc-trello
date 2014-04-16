@@ -17,6 +17,13 @@ app.configure ->
   app.use express.static(__dirname + "/public")
 
 
+app.get "/test-app", (req, res) ->
+  res.render "qa",
+    title: "this is your name"
+    query: req.query
+    firstname: req.query.firstname
+    lastname: req.query.lastname
+
 app.get "/jira-auth", (req, res) ->
   jira = new JiraApi
   jira.connect req, res

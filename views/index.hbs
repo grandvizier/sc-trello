@@ -5,19 +5,16 @@
   </head>
   <body>
     <header>
-      <div class="navigation">
-        <div class="all-boards">
-          <a href="/board/">All Boards</a>
-        </div>
-        <div class="update-token">
-          <a href="/update-token">Update Token</a>
-        </div>
-      </div>
-      <h1>Trello API modification</h1>
+      <h1>quick name check</h1>
     </header>
     <div class="container">
-      <div class="main-content">This is the default page. Pick a board to continue...
-
+      <div class="main-content">This is the default page. 
+        <form name="input" action="test-app" method="get">
+          First name: <input class="fName" type="text" name="firstname"><br>
+          Last name: <input type="text" name="lastname"><br/>
+          <input type="submit" value="Submit" onclick="document.getElementsByClassName('fName')[0].value=''; return false">
+          <input type="submit" value="Clear">
+        </form>
       </div>
     </div>
     <footer>
