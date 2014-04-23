@@ -2,11 +2,12 @@
   <head>
     <title>{{title}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   </head>
   <body>
     <header>
       <h1>Hello {{firstname}}</h1>
-      Tom, is you're last name is: {{query}}
+      <span id="first">{{reversed}}</span>, is you're last name is: {{query}}
       <p style="display:none;">Your last name is: {{lastname}}</p>
     </header>
   </body>

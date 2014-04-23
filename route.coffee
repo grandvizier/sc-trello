@@ -22,6 +22,7 @@ app.get "/test-app", (req, res) ->
     title: "this is your name"
     query: req.query
     firstname: req.query.firstname
+    reversed: (req.query.firstname).toString().split("").reverse().join("")
     lastname: req.query.lastname
 
 app.get "/jira-auth", (req, res) ->
