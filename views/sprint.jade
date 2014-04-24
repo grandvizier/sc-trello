@@ -1,0 +1,12 @@
+extend layout
+block content
+
+  - each list in lists
+    p
+      a(href="/list/#{list.id}") #{list.name}
+      if(list.issues)
+        - each issue in list.issues
+          #{JSON.stringify(issue)}
+      else
+        #{JSON.stringify(list)}
+        p.no-cards --NO ISSUES--
