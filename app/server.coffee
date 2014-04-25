@@ -99,15 +99,12 @@ renderAllProjects = (res, projects) ->
 renderSprint = (res, data) ->
   lists = []
   _.forEach data.columnsData.columns, (col) ->
-    matchingIssues = _.find(data.issuesData.issues, (issue) =>
-      _.indexOf col.statusIds, issue.statusID
-    )
+    matchingIssues = _.where(data.issuesData.issues, { 'statusId': col.statusIds.toString().split(',')[0] } )
     lists.push
       id: col.id
       name: col.name
       issues: matchingIssues
 
-  console.log ' problem with getting the matchingIssues...', lists
   res.render "sprint.jade",
     sprintName: _.find(data.sprintsData.sprints, { state: "ACTIVE" }).name
     lists: lists
