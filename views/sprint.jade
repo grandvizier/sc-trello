@@ -3,7 +3,7 @@ block content
 
   - each list in lists
     p
-      a(href="/list/#{list.id}") #{list.name}
+      a(href="/workflow/#{boardId}/#{list.id}") #{list.name}
       if(list.issues.length)
         - each issue in list.issues
           #{JSON.stringify(issue)}

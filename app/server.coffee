@@ -14,7 +14,7 @@ loadJiraProject = (res, board) ->
   jira = new JiraApi
   jira.getAgileBoardData board, (error, results) =>
     if error then return res.render "error.jade", error: error
-    renderSprint res, results
+    renderSprint res, results, board
 
 module.exports.loadBoard = (req, res) ->
   board = req.params.board
@@ -38,6 +38,17 @@ module.exports.loadBoard = (req, res) ->
         board: boardUsed.name
         lists: results.getAllLists
         members: results.getAllMembers
+
+
+module.exports.loadWorkflow = (req, res) ->
+  list_id = req.params.id
+  board = req.params.board
+  jira = new JiraApi
+  unless list_id
+    return res.render "error.jade", error: "No list id was provided"
+  jira.getAgileBoardData board, (error, results) =>
+    if error then return res.render "error.jade", error: error
+    renderList res, list_id, results
 
 
 module.exports.loadList = (req, res) ->
@@ -96,7 +107,7 @@ renderAllProjects = (res, projects) ->
   res.render "allBoards.jade",
       boards: projects
 
-renderSprint = (res, data) ->
+renderSprint = (res, data, boardId) ->
   lists = []
   _.forEach data.columnsData.columns, (col) ->
     matchingIssues = _.where(data.issuesData.issues, { 'statusId': col.statusIds.toString().split(',')[0] } )
@@ -106,5 +117,26 @@ renderSprint = (res, data) ->
       issues: matchingIssues
 
   res.render "sprint.jade",
+    boardId: boardId
     sprintName: _.find(data.sprintsData.sprints, { state: "ACTIVE" }).name
     lists: lists
+
+
+renderList = (res, listId, data) ->
+  matchingIssues = []
+  statuses = {}
+  _.forEach data.columnsData.columns, (col) =>
+    _.forEach col.statusIds, (statusId) =>
+      statuses[statusId] = col.id
+
+  console.log statuses
+  # allStatusIds = _.flatten(_.pluck(data.columnsData.columns, 'statusIds'))
+  # console.log allStatusIds
+  # _.forEach _.pluck(data.columnsData.columns, 'statusIds'), (statusId) ->
+  #   console.log statusId
+  # statuses = _.first(data.columnsData.columns, { 'id': 36 } )[0].statusIds
+  # _.forEach statuses, (statusId) =>
+  #   matchingIssues.push _.where(data.issuesData.issues, { 'statusId': "1" } )
+  # console.log _.union(_.union(matchingIssues))
+  res.render "error.jade", error: _.union(matchingIssues).length
+
