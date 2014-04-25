@@ -4,9 +4,9 @@ block content
   - each list in lists
     p
       a(href="/list/#{list.id}") #{list.name}
-      if(list.issues)
+      if(list.issues.length)
         - each issue in list.issues
           #{JSON.stringify(issue)}
+          include issue/small
       else
-        #{JSON.stringify(list)}
         p.no-cards --NO ISSUES--
