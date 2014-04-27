@@ -1,0 +1,10 @@
+block card
+  .print-story
+      .story-id #{story.key}
+      .story-name #{story.summary}
+      if(story.assigneeName)
+        pre.member-name
+          .story-assigned #{story.assigneeName}
+      else
+        pre.member-name
+          .story-unassigned --- Unassigned ---

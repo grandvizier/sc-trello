@@ -1,0 +1,16 @@
+extend printLarge
+block content
+  -var cellCount = 0
+  - each story in stories
+    tr
+      -cellCount++
+        if cellCount > 2
+          -cellCount = 1
+          tr
+            td.buffer(colspan=1)
+          tr
+        td.story(style=
+          "border:12px solid ##{colorHash(story.key.substring(4))};" +
+          "outline: 12px solid ##{colorHash(modify(story.key.substring(4)))};"
+          )
+          include ../issue/full
