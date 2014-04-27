@@ -1,4 +1,5 @@
 request = require 'request'
+_ = require 'lodash'
 
 module.exports = class JiraApi
 
@@ -32,3 +33,29 @@ module.exports = class JiraApi
 
   getAgileBoardData: (rapidViewId, done) ->
     @curlRequest baseUrl + "rest/greenhopper/1.0/xboard/work/allData/?rapidViewId=#{rapidViewId}", done
+
+  getStoriesFromBoard: (rapidViewId, done) ->
+    @curlRequest baseUrl + "rest/greenhopper/1.0/xboard/work/allData/?rapidViewId=#{rapidViewId}", (error, data) =>
+      if error then return done error
+      stories = []
+      _.forEach data.issuesData.issues, (issue) =>
+        if issue.typeId is '10001'
+          stories.push issue
+      done null, stories
+
+  getSubtasksFromParent: (parentKey, done) ->
+    @curlRequest baseUrl + "rest/api/2/search?jql=parent=#{parentKey}", (error, data) =>
+      if error then return done error
+      done null, data.issues
+
+  getBugsFromBoard: (rapidViewId, onlyOpenBugs, done) ->
+    @curlRequest baseUrl + "rest/greenhopper/1.0/xboard/work/allData/?rapidViewId=#{rapidViewId}", (error, data) =>
+      if error then return done error
+      bugs = []
+      _.forEach data.issuesData.issues, (issue) =>
+        if issue.typeId is '1'
+          if onlyOpenBugs and issue.statusName is 'Open'
+            bugs.push issue
+          else if not onlyOpenBugs
+            bugs.push issue
+      done null, bugs

@@ -1,12 +1,26 @@
 extend layout
+
+block append header-nav
+    .jira-home
+      a(href="/jira-home") Jira Boards
+    .print-stories
+      a(href="/print/stories/#{boardId}") Print Stories
+    .print-bugs
+      a(href="/print/bugs/#{boardId}") Print 'New' Bugs
+
 block content
 
   - each list in lists
     p
-      a(href="/workflow/#{boardId}/#{list.id}") #{list.name}
+      h3 #{list.name}
       if(list.issues.length)
         - each issue in list.issues
-          #{JSON.stringify(issue)}
-          include issue/small
+          if(issue.typeName == 'Story')
+            include issue/small
+          else if(issue.typeName == 'Bug')
+            include issue/smallBug
+            //- #{JSON.stringify(issue)}
+          else
+            include issue/smallOther
       else
         p.no-cards --NO ISSUES--

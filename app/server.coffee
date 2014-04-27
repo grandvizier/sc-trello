@@ -16,6 +16,28 @@ loadJiraProject = (res, board) ->
     if error then return res.render "error.jade", error: error
     renderSprint res, results, board
 
+loadStories = (res, viewBoard, board) ->
+  jira = new JiraApi
+  jira.getStoriesFromBoard board, (error, results) =>
+    if error then return res.render "error.jade", error: error
+    res.render viewBoard,
+      stories: results
+
+loadTasks = (res, viewBoard, parentKey) ->
+  jira = new JiraApi
+  jira.getSubtasksFromParent parentKey, (error, results) =>
+    if error then return res.render "error.jade", error: error
+    res.render viewBoard,
+      subtasks: results
+
+loadBugs = (res, viewBoard, board) ->
+  jira = new JiraApi
+  jira.getBugsFromBoard board, false, (error, results) =>
+    if error then return res.render "error.jade", error: error
+    res.render viewBoard,
+      bugs: results
+
+
 module.exports.loadBoard = (req, res) ->
   board = req.params.board
   if board and board.length is 2 then return loadJiraProject res, board
@@ -48,7 +70,7 @@ module.exports.loadWorkflow = (req, res) ->
     return res.render "error.jade", error: "No list id was provided"
   jira.getAgileBoardData board, (error, results) =>
     if error then return res.render "error.jade", error: error
-    renderList res, list_id, results
+    renderList res, list_id, board, results
 
 
 module.exports.loadList = (req, res) ->
@@ -73,7 +95,8 @@ module.exports.loadList = (req, res) ->
 
 module.exports.showPrintView = (req, res) ->
   viewType = req.params.type
-  viewBoard = if viewType is 'card' then "print/fullCard.jade" else "print/fullChecklist.jade"
+  ucFirst = viewType.charAt(0).toUpperCase() + viewType.slice(1);
+  viewBoard = "print/full#{ucFirst}.jade"
   listId = req.params.id
   cardId = req.query.card
   trello = new TrelloApi
@@ -81,6 +104,12 @@ module.exports.showPrintView = (req, res) ->
     return res.render "error.jade", error: "No list id was provided"
   if viewType is 'checklist' and not cardId
     return res.render "error.jade", error: "No card id provided for checklist"
+  if viewType is 'stories'
+    return loadStories res, viewBoard, listId
+  if viewType is 'tasks'
+    return loadTasks res, viewBoard, listId
+  if viewType is 'bugs'
+    return loadBugs res, viewBoard, listId
   async.series
     getListInfo: (next) =>
       trello.getListInfo listId, next
@@ -122,21 +151,19 @@ renderSprint = (res, data, boardId) ->
     lists: lists
 
 
-renderList = (res, listId, data) ->
-  matchingIssues = []
+renderList = (res, listId, boardId, data) ->
+  matchingStories = []
   statuses = {}
   _.forEach data.columnsData.columns, (col) =>
     _.forEach col.statusIds, (statusId) =>
       statuses[statusId] = col.id
 
-  console.log statuses
-  # allStatusIds = _.flatten(_.pluck(data.columnsData.columns, 'statusIds'))
-  # console.log allStatusIds
-  # _.forEach _.pluck(data.columnsData.columns, 'statusIds'), (statusId) ->
-  #   console.log statusId
-  # statuses = _.first(data.columnsData.columns, { 'id': 36 } )[0].statusIds
-  # _.forEach statuses, (statusId) =>
-  #   matchingIssues.push _.where(data.issuesData.issues, { 'statusId': "1" } )
-  # console.log _.union(_.union(matchingIssues))
-  res.render "error.jade", error: _.union(matchingIssues).length
+  _.forEach data.issuesData.issues, (issue) =>
+    if statuses[issue.statusId].toString() is listId and issue.typeId is '10001'
+      matchingStories.push issue
+
+  res.render "stories.jade",
+    stories: matchingStories
+    boardId: boardId
+    listId: listId
 
