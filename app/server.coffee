@@ -63,17 +63,6 @@ module.exports.loadBoard = (req, res) ->
         members: results.getAllMembers
 
 
-module.exports.loadWorkflow = (req, res) ->
-  list_id = req.params.id
-  board = req.params.board
-  jira = new JiraApi
-  unless list_id
-    return res.render "error.jade", error: "No list id was provided"
-  jira.getAgileBoardData board, (error, results) =>
-    if error then return res.render "error.jade", error: error
-    renderList res, list_id, board, results
-
-
 module.exports.loadList = (req, res) ->
   list_id = req.params.id
   trello = new TrelloApi
@@ -150,21 +139,4 @@ renderSprint = (res, data, boardId) ->
     boardId: boardId
     sprintName: _.find(data.sprintsData.sprints, { state: "ACTIVE" }).name
     lists: lists
-
-
-renderList = (res, listId, boardId, data) ->
-  matchingStories = []
-  statuses = {}
-  _.forEach data.columnsData.columns, (col) =>
-    _.forEach col.statusIds, (statusId) =>
-      statuses[statusId] = col.id
-
-  _.forEach data.issuesData.issues, (issue) =>
-    if statuses[issue.statusId].toString() is listId and issue.typeId is '10001'
-      matchingStories.push issue
-
-  res.render "stories.jade",
-    stories: matchingStories
-    boardId: boardId
-    listId: listId
 

@@ -1,5 +1,12 @@
 block other
-  p.small-other
-    .specifics #{issue.key} : #{issue.typeName} (#{issue.parentKey})
-    .name #{issue.summary}
-    .assigned #{issue.assigneeName}
+  .small-other
+    if(issue.typeName == 'Sub-task')
+      .task
+        p.specifics #{issue.key} (#{issue.typeName} of #{issue.parentKey})
+        .name #{issue.summary}
+        .assigned #{issue.assigneeName}
+    else
+      .epic
+        p.specifics #{issue.key} (#{issue.typeName})
+        .name #{issue.summary}
+        .assigned #{issue.assigneeName}

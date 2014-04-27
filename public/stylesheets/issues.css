@@ -1,0 +1,52 @@
+/*----------   GENERAL  ----------*/
+p.specifics{
+  font-size: medium;
+  margin-bottom: 0px;
+}
+
+.assigned{
+  padding-left: 10px;
+}
+
+/*----------   STORY  ----------*/
+.small-story{
+  border: 1px solid;
+  width: 350px;
+  margin-top: 20px;
+}
+
+.story-name{
+  font-weight: bold;
+}
+
+a.print-tasks{
+  font-size: small;
+  padding-left: 10px;
+}
+
+/*----------   BUG  ----------*/
+.small-bug{
+  border: 1px solid;
+  width: 350px;
+  margin-top: 10px;
+}
+
+.small-bug .name{
+  color: red;
+  font-weight: bold;
+}
+
+/*----------   SUB-TASK  ----------*/
+.task{
+  margin-left: 40px;
+  border-left: 1px solid;
+  width: 500px;
+  padding: 5px;
+}
+/*----------   OTHER  ----------*/
+.epic{
+  padding: 20px;
+  border: 3px dotted blue;
+  width: 350px;
+  margin: 20px;
+}

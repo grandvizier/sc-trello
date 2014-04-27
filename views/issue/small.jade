@@ -1,7 +1,6 @@
 block card
-  p.small-card
-    .card-specifics #{issue.key} : #{issue.typeName}
+  .small-story
+    p.specifics #{issue.key} : #{issue.typeName}
+    .story-name #{issue.summary}
     a.print-tasks(href="/print/tasks/#{issue.key}") Print Sub-tasks
-    .card-name #{issue.summary}
-    .card-desc #{issue.description}
-    .card-assigned #{issue.assigneeName}
+    .assigned #{issue.assigneeName}

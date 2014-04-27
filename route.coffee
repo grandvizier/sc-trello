@@ -74,9 +74,6 @@ app.get "/board/:board?", (req, res) ->
 app.get "/list/:id?", (req, res) ->
   server.loadList req, res
 
-app.get "/workflow/:board/:id?", (req, res) ->
-  server.loadWorkflow req, res
-
 app.get "/print/:type/:id", (req, res) ->
   server.showPrintView req, res
 
