@@ -29,6 +29,7 @@ loadTasks = (res, viewBoard, parentKey) ->
     if error then return res.render "error.jade", error: error
     res.render viewBoard,
       subtasks: results
+      parentKey: parentKey
 
 loadBugs = (res, viewBoard, board) ->
   jira = new JiraApi
