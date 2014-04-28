@@ -5,6 +5,11 @@ block card
       if(story.fields.assignee)
         pre.member-name
           .story-assigned #{story.fields.assignee.displayName}
+          img.member-avatar(
+            src="#{story.fields.assignee.avatarUrls['24x24']}"
+            height="24"
+            width="24"
+            alt="#{story.fields.assignee.name}")
       else
         pre.member-name
           .story-unassigned --- Unassigned ---
