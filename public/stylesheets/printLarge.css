@@ -101,5 +101,11 @@ td.story .story-name{
   text-align: right;
   font-size:  1.70em;
 }
-
+.story-points{
+  position:   absolute;
+  text-align: right;
+  right:      3px;
+  bottom:     2px;
+  font-size:  2.40em;
+}
 

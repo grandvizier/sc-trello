@@ -1,10 +1,11 @@
 block card
   .print-story
       .story-id #{story.key}
-      .story-name #{story.summary}
-      if(story.assigneeName)
+      .story-name #{story.fields.summary}
+      if(story.fields.assignee)
         pre.member-name
-          .story-assigned #{story.assigneeName}
+          .story-assigned #{story.fields.assignee.displayName}
       else
         pre.member-name
           .story-unassigned --- Unassigned ---
+      .story-points #{story.fields.customfield_10004}

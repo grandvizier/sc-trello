@@ -41,7 +41,11 @@ module.exports = class JiraApi
       _.forEach data.issuesData.issues, (issue) =>
         if issue.typeId is '10001'
           stories.push issue
-      done null, stories
+      # get actual issues from list (for the descriptions and story points)
+      storyIds = _.flatten(stories, 'id').join(',')
+      @curlRequest baseUrl + "rest/api/2/search?jql=id+in+(#{storyIds})", (error, data) =>
+        if error then return done error
+        done null, data.issues.reverse()
 
   getSubtasksFromParent: (parentKey, done) ->
     @curlRequest baseUrl + "rest/api/2/search?jql=parent=#{parentKey}", (error, data) =>
