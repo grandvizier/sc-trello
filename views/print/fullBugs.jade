@@ -2,7 +2,7 @@ extend print
 block content
   -var index = 1
   -var tableCount = 0
-  - each story in bugs
+  - each bug in bugs
     if index == 1
       tr.card(data-in="#{index}")
     if index == 2
@@ -13,5 +13,5 @@ block content
         -tableCount = 1
         tr
           td.buffer(colspan=4)
-      td.card(data-in="#{index}")
-        include ../issue/full
+      td.card.bug(data-in="#{index}")
+        include ../issue/printBug

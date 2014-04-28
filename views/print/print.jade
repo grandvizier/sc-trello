@@ -3,12 +3,6 @@ html
     title SC-Trello: #{viewType}
     link(rel='stylesheet', href='/stylesheets/print.css')
   body
-    //- header
-    //-   .navigation
-    //-     a(href="/list/#{list.id}") #{list.name}
-    //-     -if(viewType == 'checklist')
-    //-       .cardName Checklists for card...
-
     .container
       table
         block content

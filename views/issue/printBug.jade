@@ -1,0 +1,10 @@
+block card
+  .print-card
+      .card-id #{bug.key}
+      .card-name #{bug.summary}
+      if(bug.assigneeName)
+        pre.member-name
+          .card-assigned #{bug.assigneeName}
+      else
+        pre.member-name
+          .card-unassigned --- Unassigned ---

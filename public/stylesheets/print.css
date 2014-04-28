@@ -100,4 +100,6 @@ td.card .card-name{
   bottom:     2px;
 }
 
-
+td.card.bug{
+  border: 3px solid red;
+}
