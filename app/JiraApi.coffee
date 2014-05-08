@@ -39,7 +39,7 @@ module.exports = class JiraApi
       if error then return done error
       stories = []
       _.forEach data.issuesData.issues, (issue) =>
-        if issue.typeId is '10001'
+        if issue.typeId is '10001' or issue.typeId is '2' #10001 = Story; 2 = New Feature
           stories.push issue
       # get actual issues from list (for the descriptions and story points)
       storyIds = _.flatten(stories, 'id').join(',')
