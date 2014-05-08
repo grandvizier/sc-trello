@@ -1,16 +1,16 @@
 block card
-  .print-story
-      .story-id #{story.key}
-      .story-name #{story.fields.summary}
-      if(story.fields.assignee)
-        pre.member-name
-          .story-assigned #{story.fields.assignee.displayName}
-          img.member-avatar(
-            src="#{story.fields.assignee.avatarUrls['24x24']}"
-            height="24"
-            width="24"
-            alt="#{story.fields.assignee.name}")
-      else
-        pre.member-name
-          .story-unassigned --- Unassigned ---
-      .story-points #{story.fields.customfield_10004}
+  .print-story(style="border:14px solid ##{colorHash(story.key.substring(4))};")
+    .story-id #{story.key}
+    .story-name #{story.fields.summary}
+    if(story.fields.assignee)
+      pre.member-name
+        .story-assigned #{story.fields.assignee.displayName}
+        img.member-avatar(
+          src="#{story.fields.assignee.avatarUrls['24x24']}"
+          height="24"
+          width="24"
+          alt="#{story.fields.assignee.name}")
+    else
+      pre.member-name
+        .story-unassigned --- Unassigned ---
+    .story-points #{story.fields.customfield_10004}

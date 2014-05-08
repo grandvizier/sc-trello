@@ -28,6 +28,7 @@ table {
 }
 td{
   max-width: 6.9cm;
+  width: 6.9cm;
   max-height: 6.8cm;
   height: 6.8cm;
   border: 8px solid black;
@@ -46,6 +47,7 @@ td.card{
   max-width: 14cm;
   max-height: 10.4cm;
   height: 10.4cm;
+  width: 14cm;
   border: 3px solid black;
   outline: 8px;
 }
@@ -102,4 +104,8 @@ td.card .card-name{
 
 td.card.bug{
   border: 3px solid red;
+}
+
+.checklist{
+  font-size:  24;
 }

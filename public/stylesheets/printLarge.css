@@ -30,22 +30,21 @@ td{
   max-width: 6.8cm;
   max-height: 6.9cm;
   height: 6.9cm;
-  border: 12px solid black;
   outline: 12px solid red;
-  padding: 10px;
+  padding: 4px;
   text-align: center;
   text-overflow: ellipsis
 }
 td.buffer{
-  max-height: .8cm;
-  height: .8cm;
+  max-height: 1.5cm;
+  height: 1.5cm;
   border: 0;
   outline: 0;
 }
 td.story{
   max-width: 20.8cm;
-  max-height: 14cm;
-  height: 12cm;
+  max-height: 11cm;
+  height: 11cm;
 }
 td.story .story-name{
   font-size:  3.80em;
@@ -83,6 +82,7 @@ td.story .story-name{
   position:   relative;
   height:     100%;
   max-height: 100%;
+  border:     12px solid black;
 }
 .print-story .story-desc {
   padding:    10px 1px 1px 1px;
