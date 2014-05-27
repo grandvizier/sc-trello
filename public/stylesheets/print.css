@@ -108,4 +108,5 @@ td.card.bug{
 
 .checklist{
   font-size:  24;
+  word-wrap: break-word;
 }

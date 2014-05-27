@@ -15,7 +15,7 @@ block content
       h3 #{list.name}
       if(list.issues.length)
         - each issue in list.issues
-          if(issue.typeName == 'Story' || issue.typeName == 'New Feature')
+          if(issue.typeName == 'Story' || issue.typeName == 'New Feature' || issue.typeName == 'Improvement')
             include issue/small
           else if(issue.typeName == 'Bug')
             include issue/smallBug
