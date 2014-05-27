@@ -40,18 +40,17 @@ app.configure ->
       unless int % 2 then hash = str + (10 - int) + str
       else hash = (10 - int) + str + str
     else
-      if _.indexOf([0,7], lastDigit) > -1
-        hash = "f" + base[0] + base[1]
-      if _.indexOf([1,8], lastDigit) > -1
-        hash = base[0] + "f" + base[1]
-      if _.indexOf([2,9], lastDigit) > -1
-        hash = base[0] + base[1] + "f"
-      if _.indexOf([3,6], lastDigit) > -1
-        hash = "#{lastDigit}" + base[0] + base[1]
-      if lastDigit is 4
-        hash = base[0] + "4" + base[1]
-      if lastDigit is 5
-        hash = base[0] + base[1] + "5"
+      switch lastDigit
+        when 0 then hash = "f" + base[0] + base[1]
+        when 1 then hash = base[0] + "f" + base[1]
+        when 2 then hash = base[0] + base[1] + "f"
+        when 3 then hash = "b" + base[0] + base[1]
+        when 4 then hash = base[0] + "b" + base[1]
+        when 5 then hash = base[0] + base[1] + "b"
+        when 6 then hash = "c" + base[0] + base[1]
+        when 7 then hash = "#{lastDigit}" + base[0] + base[1]
+        when 8 then hash = base[0] + "#{lastDigit}" + base[1]
+        when 9 then hash = base[0] + base[1] + "#{lastDigit}"
     hash
 
 
