@@ -13,8 +13,8 @@
         <form name="input" action="test-app" method="get">
           First name: <input id="fName_m" type="text" name="firstname"><br>
           Last name: <input  id="lName" type="text" name="lastname"><br/>
-          <input type="submit" value="Submit" onclick="$('#fName_m').val(''); $('#lName').val(''); return false;">
           <input type="submit" value="Clear">
+          <input type="submit" value="Submit" onclick="$('#fName_m').val(''); $('#lName').val(''); console.log('yeay! you found a bug - can you reproduce?'); return false;">
         </form>
       </div>
     </div>
