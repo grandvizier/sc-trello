@@ -3,7 +3,7 @@ block content
   -var index = 1
   -var tableCount = 0
   - each item in subtasks
-    if(item.fields.status.name != "complete")
+    if(item.fields.status.name != "Done")
       if index == 1
         tr(data-in="#{index}")
       if index == 4
