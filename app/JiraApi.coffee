@@ -39,7 +39,8 @@ module.exports = class JiraApi
       if error then return done error
       stories = []
       _.forEach data.issuesData.issues, (issue) =>
-        if issue.typeId is '10001' or issue.typeId is '2' #10001 = Story; 2 = New Feature
+        #10001 = Story; 2 = New Feature; 4 = Improvement
+        if issue.typeId in ['10001', '2', '4']
           stories.push issue
       # get actual issues from list (for the descriptions and story points)
       storyIds = _.flatten(stories, 'id').join(',')
@@ -57,7 +58,8 @@ module.exports = class JiraApi
       if error then return done error
       bugs = []
       _.forEach data.issuesData.issues, (issue) =>
-        if issue.typeId is '1'
+        #1 = Bug; 10200 = Fire
+        if issue.typeId in ['1', '10200']
           if onlyOpenBugs and issue.statusName is 'Open'
             bugs.push issue
           else if not onlyOpenBugs

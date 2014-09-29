@@ -17,7 +17,7 @@ block content
         - each issue in list.issues
           if(issue.typeName == 'Story' || issue.typeName == 'New Feature' || issue.typeName == 'Improvement')
             include issue/small
-          else if(issue.typeName == 'Bug')
+          else if(issue.typeName == 'Bug' || issue.typeName == 'FIRE')
             include issue/smallBug
             //- #{JSON.stringify(issue)}
           else

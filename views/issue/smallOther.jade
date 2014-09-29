@@ -1,6 +1,6 @@
 block other
   .small-other
-    if(issue.typeName == 'Sub-task')
+    if(issue.typeName == 'Sub-task' || issue.typeName == 'Blocker')
       .task
         p.specifics #{issue.key} (#{issue.typeName} of #{issue.parentKey})
         .name #{issue.summary}
