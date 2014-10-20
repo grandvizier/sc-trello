@@ -1,6 +1,7 @@
 express = require "express"
 cons = require 'consolidate'
 _ = require 'lodash'
+md5 = require 'MD5'
 server = require './app/server'
 TrelloApi = require './app/TrelloApi'
 
@@ -25,6 +26,11 @@ app.configure ->
       hash |= 0 # Convert to 32bit integer
       i++
     hash.toString().substr(0,3)
+
+  app.locals.hashColor = (str) ->
+    return "000" if str.length is 0
+    color = md5(str)
+    color.substr(0,3)
 
   app.locals.colorHash = (str) ->
     hash = "000"

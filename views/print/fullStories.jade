@@ -9,6 +9,6 @@ block content
           tr
             td.buffer(colspan=1)
           tr
-        td.story(style="outline: 14px solid ##{colorHash(modify(story.key.substring(4)))};")
+        td.story(style="outline: 14px solid ##{hashColor(story.key.substring(story.key.indexOf('-')+1))};")
           include ../issue/full
         tr

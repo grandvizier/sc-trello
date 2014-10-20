@@ -1,5 +1,5 @@
 block card
-  .print-story(style="border:14px solid ##{colorHash(story.key.substring(4))};")
+  .print-story(style="border:14px solid ##{colorHash(story.key.substring(story.key.indexOf('-')+1))};")
     .story-id #{story.key}
     .story-name #{story.fields.summary}
     if(story.fields.assignee)
