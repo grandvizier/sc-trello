@@ -15,8 +15,8 @@ block content
         tr
           td.buffer(colspan=4)
       td(style=
-        "border:12px solid ##{colorHash(parentKey.substring(4))};" +
-        "outline: 12px solid ##{colorHash(modify(parentKey.substring(4)))};"
+        "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
+        "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"
         )
         .checklist
           #{item.fields.summary)
