@@ -1,7 +1,7 @@
 !!!5
 html
   head
-    title SC-Trello
+    title SC-Jira
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/card.css')
     link(rel='stylesheet', href='/stylesheets/issues.css')
@@ -11,12 +11,12 @@ html
         block header-nav
           .home
             a(href="/") home
-          .all-boards
-            a(href="/board") Trello Boards
+          .update-token
+            a(href="/update-token") Update Token
 
       block header-title
-        -var titleText = (board) ? ': ' + board : ''
-        h1 Trello board #{titleText}
+        -var titleText = (sprintName) ? ': ' + sprintName : ''
+        h1 Jira Projects #{titleText}
 
     .container
       .main-content

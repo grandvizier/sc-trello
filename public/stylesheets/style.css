@@ -45,11 +45,33 @@ a:active {
   text-decoration: none;
 }
 
+.update-token a{
+  font-size: 12px;
+  color: grey;
+}
+
 .navigation div{
   display: inline;
   list-style-type: none;
   padding-right: 20px;
   text-transform: uppercase;
+}
+
+
+/*------------------------------------*/
+
+
+.project {
+  padding-left: 30px;
+}
+
+.project img{
+  position: absolute;
+}
+
+.project p.name{
+  position: relative;
+  padding-left: 45px;
 }
 
 

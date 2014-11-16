@@ -2,11 +2,11 @@ extend layout
 
 block append header-nav
     .jira-home
-      a(href="/jira-home") Jira Boards
+      a(href="/") -
     .print-stories
-      a(href="/print/stories/#{boardId}") Print Stories
+      a(href="/print/stories/#{projectId}") Print Stories
     .print-bugs
-      a(href="/print/bugs/#{boardId}") Print 'New' Bugs
+      a(href="/print/bugs/#{projectId}") Print 'New' Bugs
 
 block content
 

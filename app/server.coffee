@@ -1,24 +1,45 @@
-TrelloApi = require './TrelloApi'
 JiraApi = require './JiraApi'
 _ = require 'lodash'
 async = require 'async'
 
 
-module.exports.loadJiraProjects = (req, res) ->
+module.exports.loadAllProjects = (req, res) ->
   jira = new JiraApi
   jira.getAllProjects (error, results) =>
     if error then return res.render "error.jade", error: error
-    renderAllProjects res, results.views
+    projects = _.sortBy results.views, "name"
+    renderAllProjects res, projects
 
-loadJiraProject = (res, board) ->
+module.exports.loadSprintForProject = (req, res) ->
   jira = new JiraApi
-  jira.getAgileBoardData board, (error, results) =>
+  projectId = req.params.projectId
+  unless projectId
+    return res.render "error.jade", error: "Project ID is not valid"
+  jira.getAgileBoardData projectId, (error, results) =>
     if error then return res.render "error.jade", error: error
-    renderSprint res, results, board
+    renderSprint res, results, projectId
 
-loadStories = (res, viewBoard, board) ->
+
+module.exports.showPrintView = (req, res) ->
+  viewType = req.params.type
+  ucFirst = viewType.charAt(0).toUpperCase() + viewType.slice(1);
+  viewBoard = "print/full#{ucFirst}.jade"
+  projectId = req.params.id
+  cardId = req.query.card
+  unless projectId
+    return res.render "error.jade", error: "No Project id was provided"
+  if viewType is 'stories'
+    return loadStories res, viewBoard, projectId
+  if viewType is 'tasks'
+    return loadTasks res, viewBoard, projectId
+  if viewType is 'bugs'
+    return loadBugs res, viewBoard, projectId
+
+
+
+loadStories = (res, viewBoard, projectId) ->
   jira = new JiraApi
-  jira.getStoriesFromBoard board, (error, results) =>
+  jira.getStoriesFromProject projectId, (error, results) =>
     if error then return res.render "error.jade", error: error
     res.render viewBoard,
       stories: results
@@ -39,94 +60,13 @@ loadBugs = (res, viewBoard, board) ->
       bugs: results
 
 
-module.exports.loadBoard = (req, res) ->
-  board = req.params.board
-  if board and board.length is 2 then return loadJiraProject res, board
-  trello = new TrelloApi
-  async.series
-    getAllBoards: (next) =>
-      trello.getAllBoards next
-    getAllLists: (next) =>
-      unless board then return next()
-      trello.getAllListsWithCards board, next
-    getAllMembers: (next) =>
-      unless board then return next()
-      trello.getAllMembersOnBoard board, next
-  , (error, results) =>
-    if error then return res.render "error.jade", error: error
-    unless board then renderAllProjects res, results.getAllBoards
-    else
-      boardUsed = _.find results.getAllBoards, (brd) -> brd.id is board
-      res.render "board.jade",
-        board: boardUsed.name
-        lists: results.getAllLists
-        members: results.getAllMembers
-
-
-module.exports.loadList = (req, res) ->
-  list_id = req.params.id
-  trello = new TrelloApi
-  unless list_id
-    return res.render "error.jade", error: "No list id was provided"
-  async.series
-    getListInfo: (next) =>
-      trello.getListInfo list_id, next
-    getAllCards: (next) =>
-      trello.getAllCardsWithChecklist list_id, next
-    getAllMembers: (next) =>
-      trello.getAllMembersForList list_id, next
-  , (error, results) =>
-    if error then res.render "error.jade", error: error
-    else
-      res.render "list.jade",
-        list: results.getListInfo
-        cards: results.getAllCards
-        members: results.getAllMembers
-
-module.exports.showPrintView = (req, res) ->
-  viewType = req.params.type
-  ucFirst = viewType.charAt(0).toUpperCase() + viewType.slice(1);
-  viewBoard = "print/full#{ucFirst}.jade"
-  listId = req.params.id
-  cardId = req.query.card
-  trello = new TrelloApi
-  unless listId
-    return res.render "error.jade", error: "No list id was provided"
-  if viewType is 'checklist' and not cardId
-    return res.render "error.jade", error: "No card id provided for checklist"
-  if viewType is 'stories'
-    return loadStories res, viewBoard, listId
-  if viewType is 'tasks'
-    return loadTasks res, viewBoard, listId
-  if viewType is 'bugs'
-    return loadBugs res, viewBoard, listId
-  async.series
-    getListInfo: (next) =>
-      trello.getListInfo listId, next
-    getAllItems: (next) =>
-      if viewType is 'card'
-        trello.getAllCardsWithChecklist listId, next
-      else
-        trello.getChecklistsForCard cardId, next
-    getAllMembers: (next) =>
-      trello.getAllMembersForList listId, next
-  , (error, results) =>
-    if error then res.render "error.jade", error: error
-    else
-      res.render viewBoard,
-        viewType: viewType
-        list: results.getListInfo
-        cards: results.getAllItems
-        members: results.getAllMembers
-
-
 
 
 renderAllProjects = (res, projects) ->
-  res.render "allBoards.jade",
-      boards: projects
+  res.render "index.jade",
+      projects: projects
 
-renderSprint = (res, data, boardId) ->
+renderSprint = (res, data, projectId) ->
   lists = []
   _.forEach data.columnsData.columns, (col) ->
     matchingIssues = _.where(data.issuesData.issues, { 'statusId': col.statusIds.toString().split(',')[0] } )
@@ -136,7 +76,7 @@ renderSprint = (res, data, boardId) ->
       issues: matchingIssues
 
   res.render "sprint.jade",
-    boardId: boardId
+    projectId: projectId
     sprintName: _.find(data.sprintsData.sprints, { state: "ACTIVE" }).name
     lists: lists
 

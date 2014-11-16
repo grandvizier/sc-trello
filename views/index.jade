@@ -1,0 +1,15 @@
+extend layout
+block content
+  | This is the default page. Pick a project to continue...
+
+  - each project in projects
+    .project
+      unless(project.closed)
+        a(href="/project/#{project.id}")
+          img.member-avatar(
+            src="#{project.avatar}"
+            height="24"
+            width="24")
+          p.name #{project.name}
+      else
+        .closed #{project.name} is CLOSED

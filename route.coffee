@@ -3,8 +3,6 @@ cons = require 'consolidate'
 _ = require 'lodash'
 md5 = require 'MD5'
 server = require './app/server'
-TrelloApi = require './app/TrelloApi'
-
 
 
 app = express()
@@ -60,27 +58,18 @@ app.configure ->
     hash
 
 
-app.get "/jira-home", (req, res) ->
-  server.loadJiraProjects req, res
-
-
 app.get "/", (req, res) ->
-  res.render "index"
+  server.loadAllProjects req, res
 
 app.get "/update-token", (req, res) ->
-  trello = new TrelloApi
-  trello.updateToken (url) =>
-    res.redirect url
+  res.render "token-update.jade"
 
-app.get "/board/:board?", (req, res) ->
-  server.loadBoard req, res
-
-
-app.get "/list/:id?", (req, res) ->
-  server.loadList req, res
+app.get "/project/:projectId?", (req, res) ->
+  server.loadSprintForProject req, res
 
 app.get "/print/:type/:id", (req, res) ->
   server.showPrintView req, res
+
 
 
 #TODO - make part of config

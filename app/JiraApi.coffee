@@ -29,12 +29,22 @@ module.exports = class JiraApi
 
 
   getAllProjects: (done) ->
-    @curlRequest baseUrl + "rest/greenhopper/1.0/rapidview", done
+    @curlRequest baseUrl + "rest/api/2/project", (error, data) =>
+      if error then return done error
+      projectNameAvatar = {}
+      _.forEach data, ((proj) ->
+        projectNameAvatar[proj.name] = proj.avatarUrls['24x24']
+      )
+      @curlRequest baseUrl + "rest/greenhopper/1.0/rapidview", (error, results) =>
+        if error then return done error
+        _.forEach results.views, (result) ->
+          result.avatar = projectNameAvatar[result.name]
+        done null, results
 
   getAgileBoardData: (rapidViewId, done) ->
     @curlRequest baseUrl + "rest/greenhopper/1.0/xboard/work/allData/?rapidViewId=#{rapidViewId}", done
 
-  getStoriesFromBoard: (rapidViewId, done) ->
+  getStoriesFromProject: (rapidViewId, done) ->
     @curlRequest baseUrl + "rest/greenhopper/1.0/xboard/work/allData/?rapidViewId=#{rapidViewId}", (error, data) =>
       if error then return done error
       stories = []
