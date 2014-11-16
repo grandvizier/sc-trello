@@ -117,3 +117,17 @@ td.card.bug{
   bottom:     2px;
   font-size:  2.40em;
 }
+
+.priority {
+  position: absolute;
+  opacity:  0.2;
+  filter:   alpha(opacity=20);
+  color: red;
+}
+
+.priority img{
+  height:   200px;
+  width:    200px;
+  margin-left: 150px;
+  margin-top: 150px;
+}
