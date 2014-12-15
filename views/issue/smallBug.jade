@@ -2,4 +2,5 @@ block other
   .small-bug
     p.specifics #{issue.key} : #{issue.typeName} (#{issue.parentKey})
     .name #{issue.summary}
+    a.print-tasks(href="/print/tasks/#{issue.key}") Print Sub-tasks
     .assigned #{issue.assigneeName}

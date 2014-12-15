@@ -101,9 +101,18 @@ td.card .card-name{
   left:       3px;
   bottom:     2px;
 }
+.story-id{
+  text-align: left;
+  position: relative;
+  top: -50px;
+}
 
 td.card.bug{
-  border: 3px solid red;
+  border: 10px solid red;
+}
+.parent-id{
+  text-align: right;
+  padding-top: 20px;
 }
 
 .checklist{
@@ -116,4 +125,18 @@ td.card.bug{
   right:      3px;
   bottom:     2px;
   font-size:  2.40em;
+}
+
+.priority {
+  position: absolute;
+  opacity:  0.2;
+  filter:   alpha(opacity=20);
+  color: red;
+}
+
+.priority img{
+  height:   200px;
+  width:    200px;
+  margin-left: 150px;
+  margin-top: 150px;
 }

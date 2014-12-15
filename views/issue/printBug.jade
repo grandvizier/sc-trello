@@ -1,5 +1,8 @@
 block card
   .print-card
+      .priority
+        img(src="#{bug.priorityUrl}")
+        | #{bug.priorityName}
       .card-id #{bug.key}
       .card-name #{bug.summary}
       if(bug.assigneeName)

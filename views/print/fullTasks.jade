@@ -3,6 +3,7 @@ block content
   -var index = 1
   -var tableCount = 0
   - each item in subtasks
+    -var typeId = item.fields.parent.fields.issuetype.id
     if(item.fields.status.name != "Done" && item.fields.status.name != "Resolved" && item.fields.status.name != "Closed")
       if index == 1
         tr(data-in="#{index}")
@@ -14,9 +15,16 @@ block content
         -tableCount = 1
         tr
           td.buffer(colspan=4)
-      td(style=
-        "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
-        "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"
-        )
-        .checklist
-          #{item.fields.summary)
+      if typeId == 1
+        td(style="border:2px solid red")
+          .checklist
+              #{item.fields.summary)
+          .parent-id #{parentKey}
+      else
+        td(style=
+          "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
+          "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"
+          )
+          .story-id #{item.key}
+          .checklist
+            #{item.fields.summary)
