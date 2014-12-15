@@ -16,15 +16,16 @@ block content
         tr
           td.buffer(colspan=4)
       if typeId == 1
-        td(style="border:2px solid red")
+        td(style="border:1px solid red; outline: 1px solid red;").sub-task
+          .story-id #{item.key}
           .checklist
               #{item.fields.summary)
-          .parent-id #{parentKey}
+          .parent-id (Parent #{parentKey})
       else
         td(style=
           "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
           "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"
-          )
+          ).sub-task
           .story-id #{item.key}
           .checklist
             #{item.fields.summary)
