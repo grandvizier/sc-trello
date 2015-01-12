@@ -68,6 +68,12 @@ renderAllProjects = (res, projects) ->
 
 renderSprint = (res, data, projectId) ->
   lists = []
+
+  if not data.sprintsData?.sprints? or data.sprintsData.sprints.length is 0
+    msg = "* No sprint created for project #{projectId}. Unable to load issues #{JSON.stringify(data.issuesData.issues)}"
+    res.render "error.jade", error: msg
+    return
+
   _.forEach data.columnsData.columns, (col) ->
     matchingIssues = _.where(data.issuesData.issues, { 'statusId': col.statusIds.toString().split(',')[0] } )
     lists.push
