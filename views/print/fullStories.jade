@@ -2,13 +2,16 @@ extend printLarge
 block content
   -var cellCount = 0
   - each story in stories
-    tr
-      -cellCount++
-        if cellCount > 2
-          -cellCount = 1
-          tr
-            td.buffer(colspan=1)
-          tr
+    -cellCount++
+      if cellCount > 2
+        -cellCount = 1
+        tr(id='#{story.key}_buffer')
+          td.buffer(colspan=1)
+            button.remove(
+              onclick='$("##{story.key}_buffer").remove();') Remove-padding
+      tr(id='#{story.key}')
         td.story(style="outline: 14px solid ##{hashColor(story.key.substring(story.key.indexOf('-')+1))};")
+          button.remove(
+            onclick='$("##{story.key}").next(".extra").remove(); $("##{story.key}").remove();') Remove
           include ../issue/full
-        tr
+        tr.extra

@@ -49,8 +49,16 @@ td.story{
 td.story .story-name{
   font-size:  3.80em;
 }
+.remove {
+  background: url(../button_delete_small.png) no-repeat top right;
+  width: 165px;
+  height: 28px;
+}
 
 @media print {
+  .remove {
+    display: none;
+  }
   .container {
       margin: 0;
       border: initial;

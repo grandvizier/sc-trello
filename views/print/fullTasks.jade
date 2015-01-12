@@ -21,10 +21,13 @@ block content
               #{item.fields.summary)
           .parent-id #{parentKey}
       else
-        td(style=
+        td(id='#{item.key}'
+          style=
           "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
           "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"
           )
+          button.remove(
+            onclick='$("##{item.key}").remove();') Remove
           .story-id #{item.key}
           .checklist
             #{item.fields.summary)
