@@ -74,6 +74,9 @@ td.card .card-name{
     position:   initial;
     max-height: initial;
   }
+  .remove {
+    display: none;
+  }
 }
 
 
