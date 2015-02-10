@@ -77,6 +77,10 @@ td.story .story-name{
     position:   initial;
     max-height: initial;
   }
+  .qa-label {
+    background: initial;
+    -webkit-print-color-adjust: exact;
+  }
 }
 
 
@@ -98,6 +102,15 @@ td.story .story-name{
   text-align: justify;
   max-height: 40%;
   overflow:   hidden;
+}
+.qa-label {
+  background: repeating-linear-gradient(
+    110deg,
+    #fff,
+    #fff 15px,
+    #fdf 40px,
+    #fff 60px
+  );
 }
 .member-name{
   position:   absolute;

@@ -23,6 +23,7 @@ block content
           .parent-id (Parent #{parentKey})
       else
         td(id='#{item.key}'
+          class=item.fields.labels.indexOf("QA") > -1 ? "qa-label" : "",
           style=
           "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
           "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"

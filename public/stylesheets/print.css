@@ -77,6 +77,10 @@ td.card .card-name{
   .remove {
     display: none;
   }
+  .qa-label {
+    background: initial;
+    -webkit-print-color-adjust: exact;
+  }
 }
 
 
@@ -97,6 +101,15 @@ td.card .card-name{
   text-align: justify;
   max-height: 40%;
   overflow:   hidden;
+}
+.qa-label {
+  background: repeating-linear-gradient(
+    110deg,
+    #fff,
+    #fff 15px,
+    #fdf 40px,
+    #fff 60px
+  );
 }
 .member-name{
   position:   absolute;
