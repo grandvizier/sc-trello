@@ -142,6 +142,12 @@ td.sub-task{
   font-size:  24;
   word-wrap: break-word;
 }
+.dev-task{
+  color: #B924E8;
+}
+.completed-task{
+  color: #ccc !important;
+}
 .story-points{
   position:   absolute;
   text-align: right;

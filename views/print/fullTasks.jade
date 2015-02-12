@@ -3,33 +3,35 @@ block content
   -var index = 1
   -var tableCount = 0
   - each item in subtasks
-    -var typeId = item.fields.parent.fields.issuetype.id
-    if(item.fields.status.name != "Done" && item.fields.status.name != "Resolved" && item.fields.status.name != "Closed")
-      if index == 1
-        tr(data-in="#{index}")
-      if index == 4
-        -index = 0
-      -index++
-      -tableCount++
-      if tableCount > 12
-        -tableCount = 1
-        tr
-          td.buffer(colspan=4)
-      if typeId == 1
-        td(style="border:1px solid red; outline: 1px solid red;").sub-task
-          .story-id #{item.key}
-          .checklist
-              #{item.fields.summary)
-          .parent-id (Parent #{parentKey})
-      else
-        td(id='#{item.key}'
-          class=item.fields.labels.indexOf("QA") > -1 ? "qa-label" : "",
-          style=
-          "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
-          "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"
-          ).sub-task
-          button.remove(
-            onclick='$("##{item.key}").remove();') Remove
-          .story-id #{item.key}
-          .checklist
+    -var parentTypeId = item.fields.parent.fields.issuetype.id
+    -var typeId = item.fields.issuetype.id
+    -var type = item.fields.issuetype.id
+    -var doneState = arrayContains(["Deployed", "Not a bug", "Code Done"], item.fields.status.name)
+    if index == 1
+      tr(data-in="#{index}")
+    if index == 4
+      -index = 0
+    -index++
+    -tableCount++
+    if tableCount > 12
+      -tableCount = 1
+      tr
+        td.buffer(colspan=4)
+    if parentTypeId == 1
+      td(style="border:1px solid red; outline: 1px solid red;").sub-task
+        .story-id #{item.key}
+        .checklist(class=typeId == '10002' ? "dev-task" : "")
             #{item.fields.summary)
+        .parent-id (Parent #{parentKey})
+    else
+      td(id='#{item.key}'
+        class=item.fields.labels.indexOf("QA") > -1 ? "qa-label" : "",
+        style=
+        "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
+        "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"
+        ).sub-task
+        button.remove(
+          onclick='$("##{item.key}").remove();') Remove
+        .story-id #{item.key}
+        .checklist(class=typeId == '10002' ? "dev-task" : "")(class=doneState ? "completed-task" : "")
+          #{item.fields.summary)

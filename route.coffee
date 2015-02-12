@@ -14,6 +14,9 @@ app.configure ->
   app.engine "hbs", cons.handlebars
   app.set "view engine", "hbs"
   app.use express.static(__dirname + "/public")
+  app.locals.arrayContains = (arr, str) ->
+    str in arr
+
   app.locals.modify = (str) ->
     return "0" if str.length is 0
     i = 0

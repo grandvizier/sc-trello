@@ -15,9 +15,9 @@ block content
       h3 #{list.name}
       if(list.issues.length)
         - each issue in list.issues
-          if(issue.typeName == 'Story' || issue.typeName == 'New Feature' || issue.typeName == 'Improvement')
+          if(arrayContains(['Story', 'New Feature', 'Improvement'], issue.typeName))
             include issue/small
-          else if(issue.typeName == 'Bug' || issue.typeName == 'FIRE')
+          else if(arrayContains(['Bug', 'FIRE'], issue.typeName))
             include issue/smallBug
             //- #{JSON.stringify(issue)}
           else

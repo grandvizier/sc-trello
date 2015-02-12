@@ -1,6 +1,7 @@
 block other
+  -var printableIssue = arrayContains(['Sub-task', 'Blocker', 'Dev Sub-Task', 'QA Task'], issue.typeName)
   .small-other
-    if(issue.typeName == 'Sub-task' || issue.typeName == 'Blocker')
+    if(printableIssue)
       .task
         p.specifics #{issue.key} (#{issue.typeName} of #{issue.parentKey})
         .name #{issue.summary}
