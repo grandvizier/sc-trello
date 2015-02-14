@@ -6,6 +6,8 @@ block content
     -var parentTypeId = item.fields.parent.fields.issuetype.id
     -var typeId = item.fields.issuetype.id
     -var type = item.fields.issuetype.id
+    -var isQATask = item.fields.labels.indexOf("QA") > -1 || typeId == '10600'
+    -var isDevTask = typeId == '10002'
     -var doneState = arrayContains(["Deployed", "Not a bug", "Code Done"], item.fields.status.name)
     if index == 1
       tr(data-in="#{index}")
@@ -20,18 +22,16 @@ block content
     if parentTypeId == 1
       td(style="border:1px solid red; outline: 1px solid red;").sub-task
         .story-id #{item.key}
-        .checklist(class=typeId == '10002' ? "dev-task" : "")
+        .checklist(class=isDevTask ? "dev-task" : "")
             #{item.fields.summary)
         .parent-id (Parent #{parentKey})
     else
-      td(id='#{item.key}'
-        class=item.fields.labels.indexOf("QA") > -1 ? "qa-label" : "",
-        style=
+      td(id='#{item.key}', class=isQATask ? "qa-label" : "", style=
         "border:12px solid ##{colorHash(parentKey.substring(parentKey.indexOf('-')+1))};" +
         "outline: 12px solid ##{hashColor(parentKey.substring(parentKey.indexOf('-')+1))};"
         ).sub-task
         button.remove(
           onclick='$("##{item.key}").remove();') Remove
         .story-id #{item.key}
-        .checklist(class=typeId == '10002' ? "dev-task" : "")(class=doneState ? "completed-task" : "")
+        .checklist(class=isDevTask ? "dev-task" : "")(class=doneState ? "completed-task" : "")
           #{item.fields.summary)
