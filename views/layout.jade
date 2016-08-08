@@ -1,4 +1,4 @@
-!!!5
+doctype html
 html
   head
     title SC-Jira
@@ -15,8 +15,8 @@ html
             a(href="/update-token") Update Token
 
       block header-title
-        -var titleText = (sprintName) ? ': ' + sprintName : ''
-        h1 Jira Projects #{titleText}
+        -var titleText = (projectId) ? ': ' + projectId : ''
+        h1 Open tickets on board: #{titleText}
 
     .container
       .main-content

@@ -3,7 +3,7 @@ block content
   -var cellCount = 0
   - each story in stories
     -cellCount++
-      if cellCount > 2
+      if cellCount > 3
         -cellCount = 1
         tr(id='#{story.key}_buffer')
           td.buffer(colspan=1)

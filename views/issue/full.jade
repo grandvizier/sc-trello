@@ -4,7 +4,7 @@ block card
     style="border:14px solid ##{colorHash(story.key.substring(story.key.indexOf('-')+1))};"
     )
     .story-id #{story.key}
-    .story-name #{story.fields.summary}
+    .story-name #{strTrunc.apply(story.fields.summary, [71, true])}
     if(story.fields.assignee)
       pre.member-name
         .story-assigned #{story.fields.assignee.displayName}
