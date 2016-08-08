@@ -36,15 +36,15 @@ td{
   text-overflow: ellipsis
 }
 td.buffer{
-  max-height: 1.5cm;
-  height: 1.5cm;
+  max-height: 1.3cm;
+  height: 1.3cm;
   border: 0;
   outline: 0;
 }
 td.story{
   max-width: 20.8cm;
-  max-height: 11cm;
-  height: 11cm;
+  max-height: 8cm;
+  height: 8cm;
 }
 td.story .story-name{
   font-size:  3.80em;
