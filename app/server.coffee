@@ -69,13 +69,9 @@ renderAllProjects = (res, projects) ->
 renderSprint = (res, data, projectId) ->
   lists = []
 
-  if not data.sprintsData?.sprints? or data.sprintsData.sprints.length is 0
-    msg = "* No sprint created for project #{projectId}. Unable to load issues #{JSON.stringify(data.issuesData.issues)}"
-    res.render "error.jade", error: msg
-    return
-
   _.forEach data.columnsData.columns, (col) ->
-    matchingIssues = _.where(data.issuesData.issues, { 'statusId': col.statusIds.toString().split(',')[0] } )
+    if col.name == 'Done' then return false
+    matchingIssues = _.filter data.issuesData.issues, (i) -> (i.statusId in col.statusIds)
     lists.push
       id: col.id
       name: col.name
@@ -83,6 +79,5 @@ renderSprint = (res, data, projectId) ->
 
   res.render "sprint.jade",
     projectId: projectId
-    sprintName: _.find(data.sprintsData.sprints, { state: "ACTIVE" }).name
     lists: lists
 
